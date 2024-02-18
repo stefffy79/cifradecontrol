@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cifra de Control Calculator</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            display: block;
+            margin-top: 50px;
+            padding-left: 0px;
+            justify-content: center;
+            overflow-x: hidden;
+            text-align: center;
+            align-items: center;
+            background: radial-gradient(circle, #cccccc, #535353);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+
+        }
+
+        .input-segment {
+            display: inline-block;
+            width: 2em;
+            margin-right: 5px;
+        }
+
+        #resultPopup {
+            display: none;
+            position: fixed;
+            top: 30%;
+            left: 50%;
+            right: 50%;
+            transform: translate(-50%, -50%);
+            padding: 5px;
+            background-color: #fff;
+            border: 3px solid #000;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            font-size: 25px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            width: 70%;
+            height: auto;
+        }
+
+        .buton {
+            height: 30px;
+            width: auto;
+            margin-top: 20px;
+            border: 3px solid #000;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        #inputValues {
+            height: 35px;
+            margin-top: 20px;
+            font-size: 30px;
+            width: 95%;
+            border: 3px solid #000;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .watermark {
+            position: fixed;
+            top: 5px;
+            right: 5px;
+            width: 40px;
+            height: 40px;
+        }
+
+        hr {
+            border: none;
+            border-top: 3px solid black;
+            width: 100%;
+        }
+
+        .popup-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: transparent;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+    </style>
+</head>
+
+<body>
+    <h2 style="margin-top: 20px;">Calcularea cifrei de control</h2>
+    <hr>
+    <form id="controlForm">
+        <!-- Crează un câmp orizontal împărțit în 20 de segmente -->
+        <label style="margin-top: 40px; font-size: 25px; font-weight: bold;" for="inputValues">Introduceți
+            valorile:</label>
+        <input type="text" id="inputValues" maxlength="30" pattern="[A-Za-z0-9]{1,30}" required><br>
+
+
+        <button class="buton" type="button" onclick="calculateControlDigit()">Calculează</button>
+    </form>
+    <div id="popup-container" class="popup-container">
+        <div id="resultPopup">
+            <p id="resultText"></p>
+            <button onclick="closePopup()">OK</button>
+        </div>
+    </div>
+
+    <script>
+        function calculateControlDigit() {
+            // Obține valorile introduse și completează cu zero dacă este cazul
+            const inputValues = (document.getElementById('inputValues').value + '000000000000000000000000000000').toUpperCase().slice(0, 30);
+
+            // Converteste literele in valori numerice conform regulilor date
+            const values = Array.from(inputValues, char =>
+                char >= 'A' && char <= 'Z' ? char.charCodeAt(0) - 'A'.charCodeAt(0) + 10 : parseInt(char)
+            );
+
+            // Defineste vectorul de ponderi
+            const weights = [7, 3, 1, 7, 3, 1, 7, 3, 1, 7, 3, 1, 7, 3, 1, 7, 3, 1, 7, 3, 1, 7, 3, 1, 7, 3, 1, 7, 3, 1];
+
+            // Calculează suma produselor
+            const sum = values.reduce((acc, value, index) => acc + value * weights[index], 0);
+
+            // Calculează cifra de control
+            const controlDigit = sum % 10;
+
+            // Afișează rezultatul într-un chenar alb
+            var popupContainer = document.getElementById("popup-container");
+            const resultPopup = document.getElementById('resultPopup');
+            const resultText = document.getElementById('resultText');
+            resultText.textContent = `Cifra de control este: ${controlDigit}`
+            popupContainer.style.display = "flex";
+            resultPopup.style.display = 'block';
+        }
+
+        function closePopup() {
+            // Închide fereastra pop-up
+            const resultPopup = document.getElementById('resultPopup');
+            var popupContainer = document.getElementById("popup-container");
+            resultPopup.style.display = 'none';
+            popupContainer.style.display = "none";
+        }
+    </script>
+    <img class="watermark" src="https://i.ibb.co/q9v4wW9/20230913-133046.png" alt="20230913-133046" border="0"></a>
+</body>
+
+</html>
