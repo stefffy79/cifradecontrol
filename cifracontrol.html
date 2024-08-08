@@ -38,7 +38,7 @@
             align-items: center;
             padding: 20px;
             background-color: #d6d6d6;
-            border: 3px solid black;
+            border-radius: 15px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
             max-width: 90%;
             max-height: 90%;
@@ -68,6 +68,7 @@
             font-size: 25px;
             font-weight: bold;
             margin: 20px 0;
+            margin-top: -150px;
         }
 
         hr {
@@ -110,7 +111,7 @@
 
             var textPrestabilit = getLitera(an);
 
-            popupText.textContent = "Litera seriei de la codul de bare (13) este: " + textPrestabilit;
+            popupText.textContent = "Litera seriei de la codul de bare (13) pentru anul " + an + " este: " + textPrestabilit;
             popupImage.src = "https://i.ibb.co/1LDVh6q/IMG-20231210-124156.jpg";
 
             popupContainer.style.display = "flex";
@@ -135,16 +136,11 @@
 
         document.addEventListener("DOMContentLoaded", function () {
             var popupContainer = document.getElementById("popup-container");
-            var popup = document.getElementById("popup");
 
             popupContainer.addEventListener("click", function (event) {
                 if (event.target === popupContainer) {
                     inchidePopup();
                 }
-            });
-
-            popup.addEventListener("click", function (event) {
-                event.stopPropagation();
             });
         });
     </script>
@@ -189,8 +185,6 @@
         <div id="popup" class="popup">
             <p id="popup-text"></p>
             <img id="popup-image" alt="Imagine verificare permis">
-            <br><br>
-            <button onclick="inchidePopup()">OK</button>
         </div>
     </div>
     <img class="watermark" src="https://i.ibb.co/q9v4wW9/20230913-133046.png" alt="Watermark">
