@@ -1,66 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ro">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cifra de Control Calculator</title>
+    <title>Verificare cod permis de conducere 🇵🇱 Polonia</title>
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
-            display: block;
-            margin-top: 50px;
-            padding-left: 0px;
-            justify-content: center;
-            overflow-x: hidden;
-            text-align: center;
+            display: flex;
+            flex-direction: column;
             align-items: center;
-            background: radial-gradient(circle, #cccccc, #535353);
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            background-color: whitesmoke;
+            text-align: center;
         }
 
-        .input-segment {
-            display: inline-block;
-            width: 2em;
-            margin-right: 5px;
-        }
-
-        #resultPopup {
-            display: none;
+        .popup-container {
             position: fixed;
-            top: 30%;
-            left: 50%;
-            right: 50%;
-            transform: translate(-50%, -50%);
-            padding: 5px;
-            background-color: #fff;
-            border: 3px solid #000;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            font-size: 25px;
-            font-family: Arial, Helvetica, sans-serif;
-            font-weight: bold;
-            width: 70%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .popup {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-color: #d6d6d6;
+            border: 3px solid black;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            max-width: 90%;
+            max-height: 90%;
+            overflow-y: auto;
+        }
+
+        .popup img {
+            max-width: 100%;
             height: auto;
-        }
-
-        .buton {
-            height: 30px;
-            width: auto;
-            margin-top: 20px;
-            border: 3px solid #000;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-        }
-
-        #inputValues {
-            height: 35px;
-            margin-top: 20px;
-            font-size: 30px;
-            width: 95%;
-            border: 3px solid #000;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
         }
 
         .watermark {
@@ -71,84 +58,142 @@
             height: 40px;
         }
 
+        #popup-text {
+            font-size: 25px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .head {
+            font-size: 25px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
         hr {
             border: none;
             border-top: 3px solid black;
             width: 100%;
         }
 
-        .popup-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: transparent;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            backdrop-filter: blur(5px);
+        #ani {
+            width: 50%;
+            height: 30px;
+            border: 3px solid black;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        @media (max-width: 600px) {
+            .head {
+                font-size: 20px;
+            }
+
+            #popup-text {
+                font-size: 20px;
+            }
+
+            #ani {
+                width: 70%;
+                height: 25px;
+            }
+
+            .popup {
+                padding: 10px;
+            }
         }
     </style>
+    <script>
+        function afiseazaPopup(an) {
+            var popupContainer = document.getElementById("popup-container");
+            var popupText = document.getElementById("popup-text");
+            var popupImage = document.getElementById("popup-image");
+
+            var textPrestabilit = getLitera(an);
+
+            popupText.textContent = "Litera seriei de la codul de bare (13) este: " + textPrestabilit;
+            popupImage.src = "https://i.ibb.co/1LDVh6q/IMG-20231210-124156.jpg";
+
+            popupContainer.style.display = "flex";
+        }
+
+        function inchidePopup() {
+            var popupContainer = document.getElementById("popup-container");
+            popupContainer.style.display = "none";
+        }
+
+        function getLitera(an) {
+            var litere = {
+                "1999": "A", "2000": "B", "2001": "C", "2002": "D", "2003": "E",
+                "2004": "F", "2005": "G", "2006": "H", "2007": "I", "2008": "J",
+                "2009": "K", "2010": "L", "2011": "M", "2012": "N", "2013": "O (pentru cele emise în decembrie 2013 codul va fi P)",
+                "2014": "P", "2015": "Q", "2016": "R", "2017": "S", "2018": "U",
+                "2019": "W", "2020": "Y", "2021": "Z", "2022": "AA", "2023": "BA",
+                "2024": "CA"
+            };
+            return litere[an] || "N/A";
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var popupContainer = document.getElementById("popup-container");
+            var popup = document.getElementById("popup");
+
+            popupContainer.addEventListener("click", function (event) {
+                if (event.target === popupContainer) {
+                    inchidePopup();
+                }
+            });
+
+            popup.addEventListener("click", function (event) {
+                event.stopPropagation();
+            });
+        });
+    </script>
 </head>
 
 <body>
-    <h2 style="margin-top: 20px;">Calcularea cifrei de control</h2>
-    <hr>
-    <form id="controlForm">
-        <!-- Crează un câmp orizontal împărțit în 20 de segmente -->
-        <label style="margin-top: 40px; font-size: 25px; font-weight: bold;" for="inputValues">Introduceți
-            valorile:</label>
-        <input type="text" id="inputValues" maxlength="30" pattern="[A-Za-z0-9]{1,30}" required><br>
-
-
-        <button class="buton" type="button" onclick="calculateControlDigit()">Calculează</button>
-    </form>
+    <div class="head">
+        <p>Verificare cod permis de conducere<br> 🇵🇱 Polonia 🇵🇱</p>
+        <hr>
+        <label class="ani" for="ani">Selectează anul eliberării (4.a):</label><br>
+        <select id="ani" onchange="afiseazaPopup(this.value)">
+            <option value="" disabled selected>Anul eliberării</option>
+            <option value="1999">1999</option>
+            <option value="2000">2000</option>
+            <option value="2001">2001</option>
+            <option value="2002">2002</option>
+            <option value="2003">2003</option>
+            <option value="2004">2004</option>
+            <option value="2005">2005</option>
+            <option value="2006">2006</option>
+            <option value="2007">2007</option>
+            <option value="2008">2008</option>
+            <option value="2009">2009</option>
+            <option value="2010">2010</option>
+            <option value="2011">2011</option>
+            <option value="2012">2012</option>
+            <option value="2013">2013</option>
+            <option value="2014">2014</option>
+            <option value="2015">2015</option>
+            <option value="2016">2016</option>
+            <option value="2017">2017</option>
+            <option value="2018">2018</option>
+            <option value="2019">2019</option>
+            <option value="2020">2020</option>
+            <option value="2021">2021</option>
+            <option value="2022">2022</option>
+            <option value="2023">2023</option>
+            <option value="2024">2024</option>
+        </select>
+    </div>
     <div id="popup-container" class="popup-container">
-        <div id="resultPopup">
-            <p id="resultText"></p>
-            <button onclick="closePopup()">OK</button>
+        <div id="popup" class="popup">
+            <p id="popup-text"></p>
+            <img id="popup-image" alt="Imagine verificare permis">
+            <br><br>
+            <button onclick="inchidePopup()">OK</button>
         </div>
     </div>
-
-    <script>
-        function calculateControlDigit() {
-            // Obține valorile introduse și completează cu zero dacă este cazul
-            const inputValues = (document.getElementById('inputValues').value + '000000000000000000000000000000').toUpperCase().slice(0, 30);
-
-            // Converteste literele in valori numerice conform regulilor date
-            const values = Array.from(inputValues, char =>
-                char >= 'A' && char <= 'Z' ? char.charCodeAt(0) - 'A'.charCodeAt(0) + 10 : parseInt(char)
-            );
-
-            // Defineste vectorul de ponderi
-            const weights = [7, 3, 1, 7, 3, 1, 7, 3, 1, 7, 3, 1, 7, 3, 1, 7, 3, 1, 7, 3, 1, 7, 3, 1, 7, 3, 1, 7, 3, 1];
-
-            // Calculează suma produselor
-            const sum = values.reduce((acc, value, index) => acc + value * weights[index], 0);
-
-            // Calculează cifra de control
-            const controlDigit = sum % 10;
-
-            // Afișează rezultatul într-un chenar alb
-            var popupContainer = document.getElementById("popup-container");
-            const resultPopup = document.getElementById('resultPopup');
-            const resultText = document.getElementById('resultText');
-            resultText.textContent = `Cifra de control este: ${controlDigit}`
-            popupContainer.style.display = "flex";
-            resultPopup.style.display = 'block';
-        }
-
-        function closePopup() {
-            // Închide fereastra pop-up
-            const resultPopup = document.getElementById('resultPopup');
-            var popupContainer = document.getElementById("popup-container");
-            resultPopup.style.display = 'none';
-            popupContainer.style.display = "none";
-        }
-    </script>
-    <img class="watermark" src="https://i.ibb.co/q9v4wW9/20230913-133046.png" alt="20230913-133046" border="0"></a>
+    <img class="watermark" src="https://i.ibb.co/q9v4wW9/20230913-133046.png" alt="Watermark">
 </body>
 
 </html>
